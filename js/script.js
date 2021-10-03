@@ -14,6 +14,7 @@ $(function () {
   var dc = {};
 
   var homeHtmlUrl = "snippets/home-snippet.html";
+  var aboutHtmlUrl = "snippets/about-snippet.html";
   var allCategoriesUrl =
     "https://davids-restaurant.herokuapp.com/categories.json";
   var categoriesTitleHtml = "snippets/categories-title-snippet.html";
@@ -312,6 +313,38 @@ $(function () {
     html = insertProperty(html, portionPropName, portionValue);
     return html;
   }
+
+  function getRandomNumber(from, to) {
+    return Math.floor(Math.random() * (to - from + 1) + from);
+  }
+
+  function buildAndShowAboutHTML(aboutViewHtml) {
+    const numStars = 5;
+    const starActiveClass = "fa fa-star";
+    const starInactiveClass = "fa fa-star-o";
+
+    // get random value between 1 -5 inclusive
+    var rating = getRandomNumber(1, numStars);
+
+    // Loop through number of stars and assign appropriate class
+    for (let i = 1; i <= numStars; i++) {
+      let starClass = starInactiveClass;
+      if (i <= rating) {
+        starClass = starActiveClass;
+      }
+      aboutViewHtml = insertProperty(aboutViewHtml, `star_${i}`, starClass);
+    }
+
+    // add rating number to text span
+    aboutViewHtml = insertProperty(aboutViewHtml, "ratingValue", rating);
+
+    insertHtml("#main-content", aboutViewHtml);
+  }
+
+  dc.loadAboutPage = function () {
+    showLoading("#main-content");
+    $ajaxUtils.sendGetRequest(aboutHtmlUrl, buildAndShowAboutHTML, false);
+  };
 
   global.$dc = dc;
 })(window);

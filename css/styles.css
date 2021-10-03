@@ -345,6 +345,16 @@ h3.menu-item-title {
   }
 }
 
+/* About Page */
+.rating-star {
+  margin: .2em;
+  color: #f6b319;
+}
+
+.rating-text {
+  margin-left: 1.0em;
+}
+
 
 /********** Super extra small devices Only :-) (e.g., iPhone 4) **********/
 @media (max-width: 479px) {
